@@ -1,0 +1,1 @@
+The only thing that you can store in nowhere is nothing.
