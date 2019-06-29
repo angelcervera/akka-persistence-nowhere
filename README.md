@@ -1,6 +1,6 @@
 # Akka Persistence Plugin to Nowhere
 
-[![Download](https://api.bintray.com/packages/angelcervera/maven/akka-persistence-nowhere/images/download.svg?version=1.0.0) ](https://bintray.com/angelcervera/maven/akka-persistence-nowhere/1.0.0/link)
+[ ![Download](https://api.bintray.com/packages/angelcervera/maven/akka-persistence-nowhere/images/download.svg) ](https://bintray.com/angelcervera/maven/akka-persistence-nowhere/_latestVersion)
 
 The only thing that you can store in nowhere is nothing.
 
