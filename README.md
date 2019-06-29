@@ -1,6 +1,7 @@
 # Akka Persistence Plugin to Nowhere
 
 [![Download](https://api.bintray.com/packages/angelcervera/maven/akka-persistence-nowhere/images/download.svg?version=1.0.0) ](https://bintray.com/angelcervera/maven/akka-persistence-nowhere/1.0.0/link)
+
 The only thing that you can store in nowhere is nothing.
 
 The idea of this plugin is to disable the persistence. 
