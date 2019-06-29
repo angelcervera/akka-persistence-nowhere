@@ -26,6 +26,7 @@ Two options:
 - Adding to your classpath in execution time.
 - In your `build.sbt`
   ```scala
+  resolvers += "osm4scala repo" at "http://dl.bintray.com/angelcervera/maven" // If it's not found in the main maven repository. 
   libraryDependencies += "com.acervera.akka" %% "akka-persistence-nowhere" % "1.0.0"
   ```
 
