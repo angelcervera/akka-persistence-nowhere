@@ -45,7 +45,7 @@ pomExtra :=
       </developer>
     </developers>
 
-lazy val akkaVersion = "2.5.23"
+lazy val akkaVersion = "2.6.0"
 
 lazy val root = (project in file("."))
   .settings(
@@ -60,9 +60,9 @@ lazy val root = (project in file("."))
     bintrayPackage := "akka-persistence-nowhere",
 
     libraryDependencies ++= Seq(
-      "com.typesafe.akka" %% "akka-actor" % akkaVersion,
-      "com.typesafe.akka" %% "akka-persistence" % akkaVersion,
+      "com.typesafe.akka" %% "akka-persistence-typed" % akkaVersion,
       "org.scalatest" %% "scalatest" % "3.0.8" % Test,
-      "com.typesafe.akka" %% "akka-testkit" % akkaVersion
+      "com.typesafe.akka" %% "akka-actor-testkit-typed" % akkaVersion % Test,
+      "ch.qos.logback" % "logback-classic" % "1.2.3" % Test
     )
   )

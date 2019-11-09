@@ -32,17 +32,19 @@ import akka.pattern.ask
 import akka.persistence.{PersistentActor, SnapshotOffer}
 import akka.testkit.{ImplicitSender, TestKit}
 import akka.util.Timeout
-import com.acervera.akka.persistence.nowhere.NowhereActorTest._
+import com.acervera.akka.persistence.nowhere.NowhereActorClassicTest._
 import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
 
-case class State(events: Long, acc: Long)
 
-object NowhereActorTest {
-  def props: Props = Props(new NowhereActorTest)
+
+object NowhereActorClassicTest {
+  case class State(events: Long, acc: Long)
+
+  def props: Props = Props(new NowhereActorClassicTest)
 
   case class Cmd(v: Long)
 
@@ -52,7 +54,7 @@ object NowhereActorTest {
 
 }
 
-class NowhereActorTest extends PersistentActor {
+class NowhereActorClassicTest extends PersistentActor {
 
   var state = State(0, 0)
 
@@ -94,29 +96,30 @@ class NowhereActorSpec
     TestKit.shutdownActorSystem(system)
   }
 
+  "Using Persistence Classic" should {
+    "not persist anything" in {
 
-  "The persistence actor should not persist anything" in {
+      val nowhereActor = system.actorOf(NowhereActorClassicTest.props)
+      1 to 100 foreach (_ => nowhereActor ! Cmd(10))
 
-    val nowhereActor = system.actorOf(NowhereActorTest.props)
-    1 to 100 foreach (_ => nowhereActor ! Cmd(10))
+      implicit val timeout = Timeout(3 seconds)
+      val state = Await
+        .result(nowhereActor ? GetState, timeout.duration)
+        .asInstanceOf[State]
 
-    implicit val timeout = Timeout(3 seconds)
-    val state = Await
-      .result(nowhereActor ? GetState, timeout.duration)
-      .asInstanceOf[State]
+      state should be(State(100, 1000))
 
-    state should be(State(100, 1000))
+      nowhereActor ! Kill
+      Thread.sleep(1000)
 
-    nowhereActor ! Kill
-    Thread.sleep(1000)
+      val nowhereActor2 = system.actorOf(NowhereActorClassicTest.props)
 
-    val nowhereActor2 = system.actorOf(NowhereActorTest.props)
+      val state2 = Await
+        .result(nowhereActor2 ? GetState, timeout.duration)
+        .asInstanceOf[State]
 
-    val state2 = Await
-      .result(nowhereActor2 ? GetState, timeout.duration)
-      .asInstanceOf[State]
-
-    state2 should be(State(0, 0))
+      state2 should be(State(0, 0))
+    }
   }
 }
 
